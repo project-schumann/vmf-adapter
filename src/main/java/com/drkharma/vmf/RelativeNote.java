@@ -32,14 +32,7 @@ public class RelativeNote {
         this.duration = note.getDuration();
         this.offset = note.getOffset();
 
-        // TODO: Work out algorithm.
-        //C4 -> B3
-        // B - C = 11 - 0
-        // 4 - 3 = 1
-
-        // PClast - PCnow = dPC
-        // Olast - Onow = dO.
-        // dPC * (12 * dO) = delta
+        calculatePitchDelta(note, referencePC, referenceOctave);
     }
 
     /**
@@ -94,5 +87,42 @@ public class RelativeNote {
      */
     public void setPitchDelta(int pitchDelta) {
         this.pitchDelta = pitchDelta;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RelativeNote that = (RelativeNote) o;
+
+        if (duration != that.duration) return false;
+        if (offset != that.offset) return false;
+        return pitchDelta == that.pitchDelta;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = duration;
+        result = 31 * result + offset;
+        result = 31 * result + pitchDelta;
+        return result;
+    }
+
+    /**
+     * Calculates the pitch delta.
+     *
+     * @param note            The source note.
+     * @param referencePC     The reference pitch class.
+     * @param referenceOctave The reference octave.
+     */
+    private void calculatePitchDelta(Note note, PitchClass referencePC, int referenceOctave) {
+        final int SEMITONES_IN_OCTAVE = 12;
+
+        int octaveDifference = note.getOctave() - referenceOctave;
+        int pcDifference = note.getPitchClass().getPitchClassCode() - referencePC.getPitchClassCode();
+
+        this.pitchDelta = pcDifference + (SEMITONES_IN_OCTAVE * octaveDifference);
     }
 }

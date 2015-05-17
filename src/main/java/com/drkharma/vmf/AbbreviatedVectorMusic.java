@@ -61,4 +61,23 @@ public class AbbreviatedVectorMusic {
     public void addNote(RelativeNote note) {
         this.notes.add(note);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbbreviatedVectorMusic that = (AbbreviatedVectorMusic) o;
+
+        if (header != null ? !header.equals(that.header) : that.header != null) return false;
+        return !(notes != null ? !notes.equals(that.notes) : that.notes != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = header != null ? header.hashCode() : 0;
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        return result;
+    }
 }

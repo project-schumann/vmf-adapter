@@ -56,7 +56,7 @@ public class VMFAdapter {
         this.replicateHeader();
         this.adaptNotes();
 
-        return null;
+        return this.abbreviatedVectorMusic;
     }
 
     /**
