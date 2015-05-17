@@ -36,6 +36,18 @@ public class RelativeNote {
     }
 
     /**
+     * Creates a note relative to another note.
+     * @param offset The offset from the previous note in ticks.
+     * @param duration The duration of this note.
+     * @param pitchDelta The change in pitch from the previous note in semitones.
+     */
+    public RelativeNote(int offset, int duration, int pitchDelta) {
+        this.offset = offset;
+        this.duration = duration;
+        this.pitchDelta = pitchDelta;
+    }
+
+    /**
      * Gets the duration of this note.
      *
      * @return The duration of this note.

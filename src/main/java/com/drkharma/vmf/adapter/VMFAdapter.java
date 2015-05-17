@@ -82,6 +82,9 @@ public class VMFAdapter {
                 this.abbreviatedVectorMusic.getHeader().setReferencePitchClass(note.getPitchClass());
                 this.abbreviatedVectorMusic.getHeader().setReferenceOctave(note.getOctave());
 
+                referencePC = note.getPitchClass();
+                referenceOctave = note.getOctave();
+
                 referenceRecorded = true;
             }
 

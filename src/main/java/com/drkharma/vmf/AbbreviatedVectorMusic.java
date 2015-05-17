@@ -1,5 +1,6 @@
 package com.drkharma.vmf;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,6 +17,25 @@ public class AbbreviatedVectorMusic {
      * The notes in this piece.
      */
     private List<RelativeNote> notes;
+
+    /**
+     * Default Constructor.
+     */
+    public AbbreviatedVectorMusic() {
+        this.header = null;
+        this.notes = new LinkedList<RelativeNote>();
+    }
+
+    /**
+     * Creates a pre populated vector music.
+     *
+     * @param header The header of this VMF file
+     * @param notes  The notes in this VMF file.
+     */
+    public AbbreviatedVectorMusic(RelativeVMHeader header, List<RelativeNote> notes) {
+        this.header = header;
+        this.notes = notes;
+    }
 
     /**
      * Gets the header of the VMF file.
