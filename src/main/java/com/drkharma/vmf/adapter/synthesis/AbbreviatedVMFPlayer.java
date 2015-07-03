@@ -62,7 +62,7 @@ public class AbbreviatedVMFPlayer {
         this.noteQueue.clear();
 
         // Load the reference as the last note to prepare the context.
-        this.lastNote = ((header.getReferenceOctave() - 1) * 12) + header.getReferencePitchClass().getPitchClassCode();
+        this.lastNote = (header.getReferenceOctave() * 12) + header.getReferencePitchClass().getPitchClassCode();
 
         // Determine the length of a quarter note.
         // TODO: Can this work with tempo changes?
