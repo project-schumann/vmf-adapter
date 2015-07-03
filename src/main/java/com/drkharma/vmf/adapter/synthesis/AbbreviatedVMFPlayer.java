@@ -66,8 +66,7 @@ public class AbbreviatedVMFPlayer {
 
         // Determine the length of a quarter note.
         // TODO: Can this work with tempo changes?
-        double quarterLength = (1.0 / header.getMetronomeMarkings().get(0).getQuarterBPM()) * 60 * 1000;
-        this.tickLength = quarterLength * header.getTickValue().doubleValue();
+        this.tickLength = header.getTickValue().doubleValue();
     }
 
     /**
@@ -117,11 +116,12 @@ public class AbbreviatedVMFPlayer {
                 // Prepare the note.
                 Note midiNote = new Note();
                 midiNote.setPitch(currentPitch);
+                midiNote.setLength(tickLength * currentNote.getDuration());
 
                 // Play the note.
                 Play.midi(midiNote);
 
-                // TODO: Set the appropriate duration and handle rests.
+                // TODO: handle rests.
 
                 // Update the last note.
                 lastNote = currentPitch;

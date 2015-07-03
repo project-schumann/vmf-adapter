@@ -1,20 +1,10 @@
 package com.drkharma.vmf.adapter.synthesis;
 
 import com.drkharma.vmf.*;
-import com.drkharma.vmf.adapter.VMFAdapter;
-import com.drkharma.vmf.parser.exception.TimeSignatureMissingException;
 import org.apache.commons.lang3.math.Fraction;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Test class for {@link AbbreviatedVMFPlayer}.
@@ -42,7 +32,7 @@ public class AbbreviatedVMFPlayerTest {
                 Arrays.asList(
                         new RelativeNote(0, 1, 0),
                         new RelativeNote(1, 1, 4),
-                        new RelativeNote(1, 1, 3),
+                        new RelativeNote(1, 2, 3),
                         new RelativeNote(1, 1, -3)
                 )
         );
@@ -61,7 +51,11 @@ public class AbbreviatedVMFPlayerTest {
         player.start();
 
         try {
-            Thread.sleep(6000);
+            Thread.sleep(500);
+            for (RelativeNote n : vm.getNotes()) {
+                player.enqueueNote(n);
+            }
+            Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
