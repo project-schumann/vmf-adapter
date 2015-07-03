@@ -51,11 +51,11 @@ public class AbbreviatedVMFPlayerTest {
         player.start();
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(10000);
             for (RelativeNote n : vm.getNotes()) {
                 player.enqueueNote(n);
             }
-            Thread.sleep(15000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
