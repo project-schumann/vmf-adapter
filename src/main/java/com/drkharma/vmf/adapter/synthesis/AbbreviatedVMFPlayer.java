@@ -28,6 +28,11 @@ public class AbbreviatedVMFPlayer {
     private int lastNote;
 
     /**
+     * The duration of the last note which was played.
+     */
+    private double lastDuration;
+
+    /**
      * Indicator showing player status,
      */
     private boolean isPlayerOn;
@@ -86,7 +91,7 @@ public class AbbreviatedVMFPlayer {
         // Create the thread.
         this.threadExecutor = Executors.newSingleThreadScheduledExecutor();
         this.future = threadExecutor.scheduleWithFixedDelay(new PlayerThread(), 0,
-                500, TimeUnit.MILLISECONDS);
+                250, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -113,6 +118,15 @@ public class AbbreviatedVMFPlayer {
                 RelativeNote currentNote = noteQueue.remove();
                 int currentPitch = lastNote + currentNote.getPitchDelta();
 
+                // Check if we need a rest.
+                if (currentNote.getOffset() > lastDuration) {
+                    // Add a rest in between
+                    Note midiRest = new Note();
+                    midiRest.setPitch(Note.REST);
+                    midiRest.setLength(currentNote.getOffset() - lastDuration);
+                    Play.midi(midiRest);
+                }
+
                 // Prepare the note.
                 Note midiNote = new Note();
                 midiNote.setPitch(currentPitch);
@@ -121,10 +135,9 @@ public class AbbreviatedVMFPlayer {
                 // Play the note.
                 Play.midi(midiNote);
 
-                // TODO: handle rests.
-
                 // Update the last note.
                 lastNote = currentPitch;
+                lastDuration = currentNote.getDuration();
             }
         }
     }

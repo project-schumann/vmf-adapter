@@ -31,8 +31,8 @@ public class AbbreviatedVMFPlayerTest {
                 new RelativeVMHeader(vmHeader),
                 Arrays.asList(
                         new RelativeNote(0, 1, 0),
-                        new RelativeNote(1, 1, 4),
-                        new RelativeNote(1, 2, 3),
+                        new RelativeNote(2, 1, 4),
+                        new RelativeNote(1, 1, 3),
                         new RelativeNote(1, 1, -3)
                 )
         );
