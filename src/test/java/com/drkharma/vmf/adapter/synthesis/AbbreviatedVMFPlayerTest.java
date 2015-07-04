@@ -17,7 +17,7 @@ public class AbbreviatedVMFPlayerTest {
      * Remove annotation for manual testing.
      */
     @Test
-    //@Ignore
+    @Ignore
     public void testPlayback001() {
 
         VectorMusicHeader vmHeader = new VectorMusicHeader(
