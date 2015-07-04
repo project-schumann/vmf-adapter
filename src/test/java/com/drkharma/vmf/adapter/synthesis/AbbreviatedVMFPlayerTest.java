@@ -2,6 +2,7 @@ package com.drkharma.vmf.adapter.synthesis;
 
 import com.drkharma.vmf.*;
 import org.apache.commons.lang3.math.Fraction;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
