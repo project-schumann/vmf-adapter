@@ -51,7 +51,6 @@ public class AbbreviatedVMFPlayerTest {
         player.start();
 
         try {
-            Thread.sleep(10000);
             for (RelativeNote n : vm.getNotes()) {
                 player.enqueueNote(n);
             }

@@ -3,6 +3,9 @@ package com.drkharma.vmf.adapter.synthesis;
 import com.drkharma.vmf.RelativeNote;
 import com.drkharma.vmf.RelativeVMHeader;
 import jm.music.data.Note;
+import jm.music.data.Part;
+import jm.music.data.Phrase;
+import jm.music.data.Score;
 import jm.util.Play;
 
 import java.util.LinkedList;
@@ -53,6 +56,12 @@ public class AbbreviatedVMFPlayer {
      */
     private ScheduledFuture future;
 
+    /**
+     * The tempo of the piece.
+     */
+    private int tempo;
+
+
     public AbbreviatedVMFPlayer() {
         this.noteQueue = new LinkedList<>();
     }
@@ -72,6 +81,8 @@ public class AbbreviatedVMFPlayer {
         // Determine the length of a quarter note.
         // TODO: Can this work with tempo changes?
         this.tickLength = header.getTickValue().doubleValue();
+
+        this.tempo = header.getMetronomeMarkings().get(0).getQuarterBPM();
     }
 
     /**
@@ -118,13 +129,19 @@ public class AbbreviatedVMFPlayer {
                 RelativeNote currentNote = noteQueue.remove();
                 int currentPitch = lastNote + currentNote.getPitchDelta();
 
+                Score score = new Score();
+                Part part = new Part();
+
                 // Check if we need a rest.
                 if (currentNote.getOffset() > lastDuration) {
                     // Add a rest in between
                     Note midiRest = new Note();
                     midiRest.setPitch(Note.REST);
                     midiRest.setLength(currentNote.getOffset() - lastDuration);
-                    Play.midi(midiRest);
+
+                    Phrase restPhrase = new Phrase();
+                    restPhrase.add(midiRest);
+                    part.addPhrase(restPhrase);
                 }
 
                 // Prepare the note.
@@ -132,8 +149,14 @@ public class AbbreviatedVMFPlayer {
                 midiNote.setPitch(currentPitch);
                 midiNote.setLength(tickLength * currentNote.getDuration());
 
-                // Play the note.
-                Play.midi(midiNote);
+                Phrase notePhrase = new Phrase();
+                notePhrase.add(midiNote);
+                part.addPhrase(notePhrase);
+
+                score.add(part);
+                score.setTempo(tempo);
+
+                Play.midi(score);
 
                 // Update the last note.
                 lastNote = currentPitch;
